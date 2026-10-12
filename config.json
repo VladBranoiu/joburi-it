@@ -1,0 +1,103 @@
+{
+  "curs_eur_ron": 5.05,
+  "zone": {
+    "_explicatie": "bonus = puncte în plus pentru un job din zona respectivă; mută localitățile dintr-o listă în alta după cum îți convine. O localitate necunoscută dintr-un județ intră la prima zonă care are județul în „judete”. Zona „remote” e pentru joburile de acasă, de oriunde din țară.",
+    "brasov": {
+      "eticheta": "Brașov și împrejurimi",
+      "bonus": 10,
+      "judete": ["Brașov"],
+      "cod_postal": "\\b50[0-7]\\d{3}\\b",
+      "localitati": [
+        "Brașov", "Poiana Brașov", "Săcele", "Codlea", "Ghimbav", "Cristian", "Sânpetru", "Hărman", "Bod",
+        "Colonia Bod", "Hălchiu", "Satu Nou", "Feldioara", "Rotbav", "Prejmer", "Tărlungeni", "Budila", "Vulcan",
+        "Râșnov", "Predeal", "Timișu de Jos", "Dârste", "Stupini", "Turcheș", "Cernatu", "Dumbrăvița", "Zărnești",
+        "Bran", "Făgăraș", "Victoria", "Rupea"
+      ]
+    },
+    "bacau": {
+      "eticheta": "Bacău și împrejurimi",
+      "bonus": 10,
+      "judete": ["Bacău"],
+      "localitati": [
+        "Bacău", "Mărgineni", "Hemeiuș", "Măgura", "Letea Veche", "Nicolae Bălcescu", "Sărata", "Luizi-Călugăra",
+        "Gioseni", "Tamași", "Buhuși", "Săucești", "Itești", "Filipești", "Răcăciuni", "Sascut", "Podu Turcului"
+      ]
+    },
+    "moinesti": {
+      "eticheta": "Moinești și împrejurimi",
+      "bonus": 10,
+      "judete": ["Bacău"],
+      "localitati": [
+        "Moinești", "Comănești", "Dărmănești", "Asău", "Agăș", "Solonț", "Zemeș", "Tazlău", "Bârsănești",
+        "Măgirești", "Pârjol", "Ghimeș-Făget", "Târgu Ocna", "Onești", "Slănic Moldova", "Poduri", "Lucăcești",
+        "Târgu Trotuș", "Dofteana", "Brusturoasa", "Palanca", "Scorțeni"
+      ]
+    },
+    "bucuresti": {
+      "eticheta": "București și Ilfov",
+      "bonus": 10,
+      "judete": ["București", "Bucharest", "Ilfov"],
+      "cod_postal": "\\b0[1-7]\\d{4}\\b",
+      "localitati": [
+        "București", "Bucharest", "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6",
+        "Sectorul 1", "Sectorul 2", "Sectorul 3", "Sectorul 4", "Sectorul 5", "Sectorul 6", "Voluntari", "Pipera",
+        "Otopeni", "Popești-Leordeni", "Chiajna", "Militari", "Bragadiru", "Măgurele", "Buftea", "Chitila",
+        "Corbeanca", "Ștefăneștii de Jos", "Pantelimon", "Mogoșoaia", "Snagov", "Balotești", "Dobroești",
+        "Cernica", "Domnești", "Jilava", "Berceni", "Tunari", "Afumați", "Glina", "Dragomirești-Vale", "Clinceni",
+        "Ciorogârla", "Cornetu", "1 Decembrie"
+      ]
+    },
+    "remote": {
+      "eticheta": "Remote (de acasă)",
+      "bonus": 10,
+      "judete": [],
+      "localitati": []
+    }
+  },
+  "limbi_straine_cunoscute": {
+    "_explicatie": "limbile străine pe care le știi (engleza, germana, franceza, italiana, spaniola…); joburile care cer altă limbă primesc puncte în minus",
+    "limbi": ["engleza"]
+  },
+  "firme_preferate": [
+    "siemens",
+    "bitdefender",
+    "uipath",
+    "adobe",
+    "microsoft",
+    "oracle",
+    "endava",
+    "ing",
+    "bosch",
+    "continental",
+    "luxoft",
+    "ness",
+    "atos",
+    "ibm",
+    "dell",
+    "amazon",
+    "google"
+  ],
+  "recenzii_potrivire_manuala": {
+    "_explicatie": "nume firmă din anunț -> id UndeLucram (număr) sau \"nu\" dacă potrivirea automată e greșită"
+  },
+  "google_places_api_key": "",
+  "cuvinte_cautare": {
+    "bestjobs": [
+      "developer", "programator", "software engineer", "frontend", "backend", "full stack", "java", "python",
+      ".net", "php", "javascript", "mobile", "qa", "tester", "devops", "cloud", "system administrator", "network",
+      "it support", "helpdesk", "service desk", "suport tehnic", "tehnician it", "data analyst", "data engineer",
+      "bi", "security", "embedded", "it"
+    ],
+    "bestjobs_locatii": ["brasov", "bacau", "bucuresti"],
+    "linkedin": [
+      "developer", "software engineer", "programator", "frontend", "backend", "full stack", "java", "python",
+      ".net", "javascript", "php", "mobile developer", "qa", "tester", "test automation", "devops",
+      "cloud engineer", "system administrator", "network engineer", "it support", "helpdesk", "service desk",
+      "desktop support", "technical support", "data analyst", "data engineer", "bi developer", "cyber security",
+      "embedded"
+    ],
+    "linkedin_locatii": ["Brașov, Romania", "Bacău, Romania", "Bucharest, Romania"],
+    "linkedin_remote": "Romania"
+  },
+  "pauza_intre_cereri_sec": 0.7
+}
