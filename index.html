@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joburi IT · Brașov, Bacău, București</title>
+<title>Joburi IT · Brașov, Bacău, București, Prahova</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#4338ca">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,7 +135,7 @@ function incarcaTexte() {
 }
 let textePrimite = false;
 const ZONA_TXT = DB.zone || { brasov: "Brașov și împrejurimi", bacau: "Bacău și împrejurimi", moinesti: "Moinești și împrejurimi",
-                                bucuresti: "București și Ilfov", remote: "Remote (de acasă)" };
+                                bucuresti: "București și Ilfov", prahova: "Ploiești și Prahova", remote: "Remote (de acasă)" };
 const VERDICT_CLS = { "Foarte potrivit": "v1", "Potrivit": "v2", "Merită verificat": "v3", "Slab": "v4" };
 // ce trebuie să știe înainte să apese „Deschide anunțul”
 const CUM_APLICI = {
@@ -173,6 +173,7 @@ const DEF = { tab: "joburi", post: "toate", doarSal: false, doarNoi: false, doar
               zone: Object.fromEntries(Object.keys(ZONA_TXT).map(z => [z, true])) };
 // tabul și firma aleasă nu se țin minte: pagina pornește mereu pe „Joburi”
 let F = Object.assign(structuredClone(DEF), load("jit_filtre", {}), { tab: "joburi", firma: null });
+F.zone = Object.assign(structuredClone(DEF.zone), F.zone);  // o zonă adăugată între timp apare și la cine a mai intrat
 if (["joburi", "pastrate", "firme"].includes(location.hash.slice(1))) F.tab = location.hash.slice(1);
 let ST = load("jit_stare", {});
 const st = id => ST[id] || (ST[id] = {});
@@ -454,7 +455,7 @@ document.addEventListener("input", e => {
 
 const zileVechime = DB.actualizat ? (Date.now() - Date.parse(DB.actualizat)) / 864e5 : 99;
 document.getElementById("updated").textContent = DB.actualizat
-  ? "Brașov, Bacău, Moinești, București și remote · actualizat pe " + new Date(DB.actualizat).toLocaleString("ro-RO", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
+  ? "Brașov, Bacău, Moinești, București, Prahova și remote · actualizat pe " + new Date(DB.actualizat).toLocaleString("ro-RO", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
     + (zileVechime > 3 ? " · unele anunțuri s-ar putea să fie deja ocupate" : "")
   : "Nu există date încă.";
 render();

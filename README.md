@@ -1,7 +1,7 @@
-# Joburi IT: Brașov, Bacău, Moinești, București și remote
+# Joburi IT: Brașov, Bacău, Moinești, București, Prahova și remote
 
 Strânge zilnic anunțurile IT din Brașov și împrejurimi, Bacău, Moinești (cu Comănești, Dărmănești, Onești, Târgu Ocna),
-București + Ilfov și joburile remote din România:
+București + Ilfov, Ploiești + județul Prahova și joburile remote din România:
 - **programator / developer**: frontend, backend, full stack, mobile, Java, .NET, Python, PHP, JavaScript, embedded,
   ABAP, analist programator, inginer software;
 - **IT support / helpdesk**: IT support, service desk, desktop support, tehnician IT / calculatoare, informatician,

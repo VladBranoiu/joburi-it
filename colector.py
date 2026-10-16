@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Strânge anunțuri IT (programator / developer, QA / tester, sisteme / rețele / cloud / securitate, date / BI,
-IT support / helpdesk) din Brașov, Bacău, Moinești, București + Ilfov și remote, de pe eJobs, BestJobs, OLX, LinkedIn,
+IT support / helpdesk) din Brașov, Bacău, Moinești, București + Ilfov, Prahova și remote, de pe eJobs, BestJobs, OLX, LinkedIn,
 EduJobs (+ publi24), posturi.gov.ro, ANOFM și Hipo, caută reputația firmelor (UndeLucram, opțional Google), dă fiecărui
 anunț un scor și salvează totul în data/joburi.json + data/joburi.js (citit de index.html).
 
@@ -183,13 +183,14 @@ RE_INFRA = re.compile(
     r"middleware|mainframe|release engineer|build engineer|it operations|virtualiz\w*")
 RE_SUPORT = re.compile(
     r"\bit support|support (it|informatic)|suport (it|informatic)|help ?desk|service ?desk|desktop support|"
-    r"(it|technical|tehnic) (customer )?support|suport tehnic|application support|suport aplicatii|"
+    r"\bit (customer )?support|application support|suport aplicatii|"
     r"(end[- ]?user|field|onsite|on[- ]site|deskside) support|tehnician\w* (\w+ )?(it|calculatoare|pc|retea|retele|"
     r"hardware|sisteme de calcul|echipamente de calcul|suport)|informatician\w*|\binformati(c|q)\w*|"
     r"operator\w* calculator\w* electronic|\b(it|ict)\b|calculatoare|computer|hardware")
 # titluri care pot fi și altceva („QA Engineer” la o fabrică, „System Engineer” la aeronave, „Technical Support”
 # pentru utilaje): intră doar dacă textul anunțului vorbește de IT
-RE_AMBIGUU = {"qa": re.compile(r"\bqa\b|quality assurance|test (engineer|specialist|analyst)|inginer\w* (de )?test\w*"),
+RE_AMBIGUU = {"suport": re.compile(r"(technical|tehnic) (customer )?support|suport tehnic|support (engineer|specialist)"),
+              "qa": re.compile(r"\bqa\b|quality assurance|test (engineer|specialist|analyst)|inginer\w* (de )?test\w*"),
               "infra": re.compile(r"system\w* engineer|inginer\w* (de )?sistem\w*|solutions? engineer|"
                                   r"integration engineer|security (officer|specialist)"),
               "date": re.compile(r"business analyst|analist (de )?business|system\w* analyst|analist (de )?sistem\w*|"
@@ -215,7 +216,7 @@ RE_EXCLUS_TITLU = re.compile(
 # „Programator CNC”, „Programator mașini cu comandă numerică”, „Programator PLC / automatizări”: altă meserie
 RE_EXCLUS_PROGRAMATOR = re.compile(r"\bcnc\b|strung\w*|freza\w*|frezor\w*|masin\w*|unelte|comanda numerica|"
                                    r"electroeroziune|sudur\w*|welding|robot\w*|\bplc\b|automatiz\w*|automation engineer|"
-                                   r"productie|production|programari|programarilor|lucrari|croitor\w*|\bcad\b|\bcam\b")
+                                   r"productie|production|fabricati\w*|lansator\w*|programari|programarilor|lucrari|croitor\w*|\bcad\b|\bcam\b")
 # muncă fizică, vânzări pe teren sau „joburi” de antrenat AI: scot tot anunțul, chiar dacă o bucată sună bine
 RE_EXCLUS_TOT_TITLUL = re.compile(
     r"muncitor\w*|manipulant\w*|stivuitor\w*|\bpicker|\bpacker|ambalator\w*|sortator\w*|\bhamal|"
@@ -229,7 +230,7 @@ RE_EXCLUS_TOT_TITLUL = re.compile(
     r"\bofer (servicii|serviciile|meditatii|ajutor)|"
     r"contributor|annotat\w*|ai trainer|ai tutor|ai training|(train|training|evaluate|evaluating) (ai|llm)|"
     r"\brater\b|data label\w*|outlier|transcri\w*|mystery|"
-    r"^\W*caut (un |o )?(loc de munca|job|serviciu|de lucru)")
+    r"^\W*caut (un |o )?(\w+ )?(colaborare|angajare|loc de munca|job|serviciu|de lucru)")
 # „Contabil intern” e contabil angajat al firmei, nu stagiar; doar „internship”, „student” și „practică” sunt stagii
 RE_INTERNSHIP = re.compile(r"internship|summer intern|intern program|\bstudent\w*|stagiu de practica|\bpractica\b|"
                            r"(software|developer|development|it|qa|testing|devops|cloud|data|security|network|support|"
@@ -745,7 +746,7 @@ def sursa_ejobs():
     judete = {c["id"]: c["name"] for c in statics["counties"]}
     nivele = {c["id"]: c["name"] for c in statics["careerLevels"]}
     limbi = {c["id"]: fara_diacritice(c["name"]) for c in statics["languages"]}
-    ale_noastre = (9, 4, 10, 17)  # Brașov, Bacău, București, Ilfov
+    ale_noastre = (9, 4, 10, 17, 38)  # Brașov, Bacău, București, Ilfov, Prahova
     filtru_judete = "".join(f"&filters.counties={j}" for j in ale_noastre)
     # API-ul dă puține rezultate pe căutare, așa că împărțim pe cuvinte cheie și departamente
     # (57 IT Software, 58 IT Hardware, 38 Telecomunicații, 46 Statistică / Matematică)
@@ -882,13 +883,14 @@ RE_FIRMA_IN_NUME = re.compile(r"\b(srl|s\.r\.l|sa|s\.a|srl-d|pfa|ii|company|grou
 
 
 def sursa_olx():
-    """OLX: în Brașov și Bacău luăm toate anunțurile de muncă (câteva sute) și le filtrăm după titlu; în București
+    """OLX: în Brașov, Bacău și Prahova luăm toate anunțurile de muncă și le filtrăm după titlu; în București
     sunt mii, așa că acolo căutăm după cuvinte și în categoria „IT / Telecomunicații”."""
     api = "https://www.olx.ro/api/v1/offers/"
     cuvinte = ["it", "programator", "developer", "software", "calculatoare", "suport tehnic", "helpdesk", "retea",
                "web", "tester", "informatician", "sistem", "date"]
-    # regiunile OLX: 4 Brașov, 3 Bacău, 46 București - Ilfov; categoria 4 = Locuri de muncă, 3343 / 3335 = IT
+    # regiunile OLX: 4 Brașov, 3 Bacău, 6 Prahova, 46 București - Ilfov; categoria 4 = Locuri de muncă, 3343 / 3335 = IT
     cautari = [(4, "Brașov", 4, q) for q in [None, *cuvinte]] + [(3, "Bacău", 4, q) for q in [None, *cuvinte]] + \
+              [(6, "Prahova", 4, q) for q in [None, *cuvinte]] + \
               [(46, "București", 4, q) for q in cuvinte] + [(46, "București", c, None) for c in (3343, 3335)]
     joburi, vazute = [], set()
     for regiune, judet, categorie, query in cautari:
@@ -1001,7 +1003,7 @@ def posturi_detalii(url):
 def sursa_posturi():
     """posturi.gov.ro: portalul oficial unde primăriile, spitalele, școlile și instituțiile își publică concursurile."""
     api = "https://posturi.gov.ro/wp-json/wp/v2"
-    judete = {442: "Brașov", 181: "Bacău", 483: "București", 1331: "Ilfov"}
+    judete = {442: "Brașov", 181: "Bacău", 483: "București", 1331: "Ilfov", 1957: "Prahova"}
     gasite = {}
     for kw in ["informatician", "informatic", "programator", "IT", "calculator", "retea", "sistem", "software",
                "tehnologia informatiei", "analist"]:
@@ -1052,7 +1054,7 @@ def sursa_anofm():
     emailul și telefonul angajatorului."""
     api = "https://mediere.anofm.ro/api/entity/vw_public_job_posting"
     randuri = []
-    for judet in (9, 5, 2, 42):  # Brașov, Bacău, București, Ilfov
+    for judet in (9, 5, 2, 42, 29):  # Brașov, Bacău, București, Ilfov, Prahova
         pagina = 1
         while pagina <= 30:
             d = fetch(api, data={"current": pagina, "rowCount": 100, "sort": {"id": "desc"}, "county_id": judet})
@@ -1127,11 +1129,12 @@ def hipo_detalii(url):
 
 
 def sursa_hipo():
-    """Hipo.ro: site de joburi pentru tineri (multe posturi de junior). În Brașov și Bacău luăm tot, în București
+    """Hipo.ro: site de joburi pentru tineri (multe posturi de junior). În Brașov, Bacău și Ploiești luăm tot, în București
     doar domeniile IT (altfel sunt prea multe pagini)."""
     base = "https://www.hipo.ro"
     carduri = {}
-    cautari = [("Toate-Domeniile", "Brasov"), ("Toate-Domeniile", "Bacau"), ("IT-Software", "Bucuresti"),
+    cautari = [("Toate-Domeniile", "Brasov"), ("Toate-Domeniile", "Bacau"), ("Toate-Domeniile", "Ploiesti"),
+               ("IT-Software", "Bucuresti"),
                ("IT-Hardware", "Bucuresti")]
     continua = True
     for (domeniu, oras), pagina in ((c, p) for c in cautari for p in range(1, 11)):
@@ -1183,7 +1186,7 @@ def sursa_edujobs():
     """EduJobs: puține anunțuri proprii, dar preia și anunțurile de pe publi24.ro și jobradar24.ro."""
     api = "https://back-edujobs.feel-it-services.com/job-postings/query?favoritesFirst=false"
     gasite = {}
-    cautari = [(kw, loc) for loc in ("Brasov", "Bacau", "Bucuresti") for kw in (
+    cautari = [(kw, loc) for loc in ("Brasov", "Bacau", "Bucuresti", "Ploiesti") for kw in (
         "programator", "developer", "software", "it", "calculatoare", "suport tehnic", "helpdesk", "tester",
         "retea", "administrator", "informatician", "web", "data")]
     for kw, loc in cautari:

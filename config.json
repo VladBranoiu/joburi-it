@@ -47,6 +47,17 @@
         "Ciorogârla", "Cornetu", "1 Decembrie"
       ]
     },
+    "prahova": {
+      "eticheta": "Ploiești și Prahova",
+      "bonus": 10,
+      "judete": ["Prahova"],
+      "cod_postal": "\\b10\\d{4}\\b",
+      "localitati": [
+        "Ploiești", "Blejoi", "Bărcănești", "Târgșoru Vechi", "Paulești", "Bucov", "Brazi", "Ariceștii Rahtivani",
+        "Valea Călugărească", "Boldești-Scăeni", "Băicoi", "Plopeni", "Câmpina", "Breaza", "Comarnic", "Sinaia",
+        "Bușteni", "Azuga", "Mizil", "Urlați", "Vălenii de Munte", "Slănic", "Strejnic", "Puchenii Mari"
+      ]
+    },
     "remote": {
       "eticheta": "Remote (de acasă)",
       "bonus": 10,
@@ -88,7 +99,7 @@
       "it support", "helpdesk", "service desk", "suport tehnic", "tehnician it", "data analyst", "data engineer",
       "bi", "security", "embedded", "it"
     ],
-    "bestjobs_locatii": ["brasov", "bacau", "bucuresti"],
+    "bestjobs_locatii": ["brasov", "bacau", "bucuresti", "ploiesti"],
     "linkedin": [
       "developer", "software engineer", "programator", "frontend", "backend", "full stack", "java", "python",
       ".net", "javascript", "php", "mobile developer", "qa", "tester", "test automation", "devops",
@@ -96,7 +107,7 @@
       "desktop support", "technical support", "data analyst", "data engineer", "bi developer", "cyber security",
       "embedded"
     ],
-    "linkedin_locatii": ["Brașov, Romania", "Bacău, Romania", "Bucharest, Romania"],
+    "linkedin_locatii": ["Brașov, Romania", "Bacău, Romania", "Bucharest, Romania", "Ploiești, Romania"],
     "linkedin_remote": "Romania"
   },
   "pauza_intre_cereri_sec": 0.7
